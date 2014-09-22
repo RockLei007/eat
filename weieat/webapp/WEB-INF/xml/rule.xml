@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	 <business name="餐饮业务">
+			<rule name="diancai" regex=".*点菜.*|.*diancai.*|.*点餐.*" return_type="news" class="orderDishesPlug">
+					 <title>微信点菜</title> 
+					 <description>微信点菜</description>
+					 <picUrl>$domain$/image/dapanji.jpg</picUrl>
+					 <url>$domain$/wx/dishes!input.action?weixinId=$weixinId$&amp;orgId=$orgId$</url>
+			</rule>
+			<rule name="yuding" regex=".*预定.*|.*yuding.*|.*订餐.*" return_type="news" class="tableReservePlug">
+					 <title>微信预订餐桌包厢</title> 
+					 <description>微信预订餐桌包厢</description>
+					 <picUrl>$domain$/image/dapanji.jpg</picUrl>
+					 <url>$domain$/wx/reserve!input.action?weixinId=$weixinId$&amp;orgId=$orgId$</url>
+			</rule>
+			<!--rule name="diancai" regex="点菜" return_type="text" class="orderDishesPlug">$content$</rule-->
+			<!--rule name="diancai" regex="点菜" return_type="music" class="orderDishesPlug">
+					<title>微信点菜</title>
+					<description>微信点菜</description>
+					<musicUrl>http://$domain$/music/1.mp3</musicUrl>
+					<hqMusicUrl>http://$domain$/music/1_hq.mp3</hqMusicUrl>
+			</rule-->
+	 </business>
+</root> 	

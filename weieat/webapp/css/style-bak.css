@@ -1,0 +1,114 @@
+/* global */
+a {color: #4d87ce;}
+
+th, td {border-color: #999;}
+
+table.noborder th, table.noborder td {border: none;}
+
+.error,.success    { padding: .5em; margin-bottom: 1em; margin-top: 1em; border: 2px solid #ddd; }
+.error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; }
+.success    { background: #E6EFC2; color: #264409; border-color: #C6D880; }
+.error a    { color: #8a1f11; }
+.success a  { color: #264409; }
+
+/* form */
+input[type=text], input[type=password], textarea, select {
+  background-color:#fff;
+  border:1px solid #bbb;
+  padding:2px;
+}
+
+input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus {
+  border-color:#666;
+}
+
+/* header */
+#title h1 {
+	font-size: 153.9%;
+	letter-spacing: .1em;
+	margin:0.5em  0;
+}
+
+#title h2 {
+	color: #999;
+	letter-spacing: .1em;
+	margin:0.5em 0;
+}
+
+/* body */
+#filter,#content {margin-top:1em;}
+
+/* footer */
+#ft {
+	margin-top: 15px;
+	padding: 15px 0px 0px 0px;
+	font-size: 95%;
+	text-align: center;
+	border-top: 2px solid #658A16;
+}
+
+#ft a {color: #999;}
+
+ul.topnav {
+	list-style: none;
+	padding: 0 15px;	
+	margin: 0 0 0 0;
+	float: left;
+	background: #222;
+	font-size: 1.0em;
+	font-weight: bold;
+	background: #BACE87;
+	border-top: 2px solid #658A16;
+	border-bottom: 2px solid #658A16;
+}
+ul.topnav li {
+	display: inline;
+	float: left;
+	margin: 0;	
+	padding: 0 15px 0 0;
+	position: relative; /*--Declare X and Y axis base for sub navigation--*/
+}
+ul.topnav li a{
+	padding: 10px 5px;
+	color: #fff;
+	display: block;
+	text-decoration: none;
+	float: left;
+}
+ul.topnav li a:hover{
+	background:  #BACE87;
+}
+ul.topnav li span { /*--Drop down trigger styles--*/
+	width: 17px;
+	height: 25px;
+	float: left;
+	background: url(subnav_btn.png) no-repeat center;
+}
+ul.topnav li span.subhover {background-position: center bottom; cursor: pointer;} /*--Hover effect for trigger--*/
+ul.topnav li ul.subnav {
+	list-style: none;
+	position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/
+	left: 0; top: 35px;
+	background: #658A16;
+	margin: 0; padding: 0;
+	display: none;
+	float: left;
+	width: 170px;
+	border: 1px solid #658A16;
+}
+ul.topnav li ul.subnav li{
+	margin: 0; padding: 0;
+	border-top: 1px solid #658A16; /*--Create bevel effect--*/
+	border-bottom: 1px solid #444; /*--Create bevel effect--*/
+	clear: both;
+	width: 170px;
+}
+html ul.topnav li ul.subnav li a {
+	float: left;
+	width: 145px;
+	background: #658A16 url(dropdown_linkbg.gif) no-repeat 10px center;
+	padding-left: 20px;
+}
+html ul.topnav li ul.subnav li a:hover { /*--Hover effect for subnav links--*/
+	background: #658A16 url(dropdown_linkbg.gif) no-repeat 10px center; 
+}

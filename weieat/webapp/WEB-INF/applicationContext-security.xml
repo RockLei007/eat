@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:s="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd"
+	default-lazy-init="true">
+
+	<description>SpringSecurity安全配置</description>
+
+	<!-- http安全配置 -->
+	<s:http auto-config="true" use-expressions="true">
+		<s:intercept-url pattern="/css/**" filters="none" />
+		<s:intercept-url pattern="/img/**" filters="none" />
+		<s:intercept-url pattern="/js/**" filters="none" />
+		
+		<!-- 管理员访问资源的过滤 -->
+		<s:intercept-url pattern="/system/user!save*" access="hasAnyRole('ROLE_change_user')" />
+		<s:intercept-url pattern="/system/user!delete*" access="hasAnyRole('ROLE_change_user')" />
+		<s:intercept-url pattern="/system/user*" access="hasAnyRole('ROLE_view_user')" />
+		<s:intercept-url pattern="/system/role!save*" access="hasAnyRole('ROLE_change_role')" />
+		<s:intercept-url pattern="/system/role!delete*" access="hasAnyRole('ROLE_change_role')" />
+		<s:intercept-url pattern="/system/role*" access="hasAnyRole('ROLE_view_role')" />
+		<s:intercept-url pattern="/system/menu*" access="hasAnyRole('ROLE_view_menu')" />
+		<s:intercept-url pattern="/system/menu!save*" access="hasAnyRole('ROLE_change_menu')" />
+		<s:intercept-url pattern="/system/menu!delete*" access="hasAnyRole('ROLE_change_menu')" />
+		<s:intercept-url pattern="/system/organization.action" access="hasAnyRole('ROLE_view_org')" />
+		<s:intercept-url pattern="/system/organization!save*" access="isAuthenticated()" />
+		<s:intercept-url pattern="/system/organization!add*" access="isAuthenticated()" />
+		<s:intercept-url pattern="/system/organization!delete*" access="hasAnyRole('ROLE_change_org')" />
+		<s:intercept-url pattern="/system/log*" access="hasAnyRole('ROLE_view_log')" />
+		
+		<s:intercept-url pattern="/navigation*" access="isAuthenticated()"/>
+		<s:intercept-url pattern="/js/jsp/*" access="isAuthenticated()" />
+		
+		<!-- 业务系统资源的过滤 -->
+		<s:intercept-url pattern="/eat/food*" access="hasAnyRole('ROLE_view_food')" />
+		<s:intercept-url pattern="/eat/food!disable*" access="hasAnyRole('ROLE_change_food')" />
+		<s:intercept-url pattern="/eat/food!enable*" access="hasAnyRole('ROLE_change_food')" />
+		<s:intercept-url pattern="/eat/dishes*" access="hasAnyRole('ROLE_change_dishes')" />
+		<s:intercept-url pattern="/eat/table*" access="hasAnyRole('ROLE_view_table')" />
+		<s:intercept-url pattern="/eat/table!disable*" access="hasAnyRole('ROLE_change_table')" />
+		<s:intercept-url pattern="/eat/table!enable*" access="hasAnyRole('ROLE_change_table')" />
+		<s:intercept-url pattern="/eat/receive*" access="hasAnyRole('ROLE_view_receive')" />
+		<s:intercept-url pattern="/eat/reserve*" access="hasAnyRole('ROLE_view_reserve')" />
+		<s:intercept-url pattern="/eat/attention*" access="hasAnyRole('ROLE_view_attention')" />
+		<s:intercept-url pattern="/eat/attention!save*" access="hasAnyRole('ROLE_change_attention')" />
+		<s:intercept-url pattern="/eat/attention!delete*" access="hasAnyRole('ROLE_change_attention')" />
+		<s:intercept-url pattern="/eat/customer*" access="hasAnyRole('ROLE_view_customer')" />
+		<s:intercept-url pattern="/eat/customer!save*" access="hasAnyRole('ROLE_change_customer')" />
+		<s:intercept-url pattern="/eat/customer!black*" access="hasAnyRole('ROLE_change_customer')" />
+		<s:intercept-url pattern="/eat/help.action" access="hasAnyRole('ROLE_view_help')" />
+		<s:intercept-url pattern="/eat/help!input.action" access="hasAnyRole('ROLE_change_help')" />
+		<s:intercept-url pattern="/eat/help!save.action" access="hasAnyRole('ROLE_change_help')" />
+		
+		
+		<!-- 用户访问资源的过滤 -->
+		
+		<!-- 接口访问资源IP地址的限制 -->
+		<s:intercept-url pattern="/service/menu*" access="hasIpAddress('172.0.0.1')"/>
+
+		<s:form-login login-page="/login.action" default-target-url="/" authentication-failure-url="/login.action?error=1" />
+		<s:logout logout-success-url="/"/>
+	</s:http>
+
+	<!-- 认证配置, 使用userDetailsService提供的用户信息 -->
+	<s:authentication-manager alias="authenticationManager">
+		<s:authentication-provider user-service-ref="userDetailsService">
+			<s:password-encoder hash="md5" />
+		</s:authentication-provider>
+	</s:authentication-manager>
+
+	<!-- 项目实现的用户查询服务 -->
+	<bean id="userDetailsService" class="com.heracles.framework.service.account.UserDetailsServiceImpl" />
+	
+	<!--JCaptcha验证码服务-->
+	<bean id="captchaService" class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService">
+		<property name="captchaEngine">
+			<bean class="com.heracles.framework.security.GMailEngine" />
+		</property>
+		<property name="minGuarantedStorageDelayInSeconds" value="180" />
+	</bean > 
+	
+</beans>

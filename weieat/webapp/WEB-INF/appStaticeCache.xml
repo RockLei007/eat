@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+ <bean id="menuManager" class="com.heracles.framework.service.account.MenuManager">
+	<method returnType="map" param="menuMap">getMenuMap</method>
+	<method returnType="list" param="menuList">getMenuList</method>
+ </bean>
+</root> 	

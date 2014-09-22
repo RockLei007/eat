@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+	default-lazy-init="true">
+
+	<description>quartz配置文件</description>
+
+	<!-- 守候定时任务 -->
+	<bean id="watchTask" class="com.heracles.framework.task.control.WatchTask"></bean>  
+
+    <bean id="watchQuartzDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> <!--用于设定启动时运行的Bean与方法，目标方法需要被自动执行--> 
+        <property name="targetObject"> <!-- 指定的目标bean -->
+        	<ref bean="watchTask" />
+        </property>  
+        <property name="targetMethod"> <!-- 指定目标方法 --> 
+            <value>executeTask</value>  
+        </property>  
+    </bean>  
+
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean"><!-- 配置Cron触发器 -->   
+        <property name="jobDetail"> <!-- 指定触发器关联的作业 -->   
+            <ref bean="watchQuartzDetail" />  
+        </property>  
+        <property name="cronExpression"><!-- 指定Cron表达式 -->  
+            <value>0/10 * * * * ?</value>  
+        </property>  
+    </bean>  
+ 
+    <bean id="schedulerBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"><!-- 建立实际调度 -->  
+        <property name="triggers"><!-- 指定调度使用的触发器列表 -->   
+            <list>  
+                <ref local="cronTrigger" />  
+            </list>  
+        </property>  
+    </bean>
+    
+      
+</beans>
